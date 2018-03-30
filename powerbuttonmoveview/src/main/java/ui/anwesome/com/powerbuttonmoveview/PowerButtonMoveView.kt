@@ -1,5 +1,6 @@
 package ui.anwesome.com.powerbuttonmoveview
 
+import android.app.Activity
 import android.content.Context
 import android.graphics.*
 import android.view.*
@@ -115,6 +116,13 @@ class PowerButtonMoveView(ctx: Context) : View(ctx) {
             powerButtonMove.startUpdating {
                 animator.start()
             }
+        }
+    }
+    companion object {
+        fun create(activity : Activity) : PowerButtonMoveView {
+            val view = PowerButtonMoveView(activity)
+            activity.setContentView(view)
+            return view 
         }
     }
 }
