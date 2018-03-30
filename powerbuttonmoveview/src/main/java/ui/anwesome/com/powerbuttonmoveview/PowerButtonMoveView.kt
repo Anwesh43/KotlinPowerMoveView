@@ -29,7 +29,7 @@ class PowerButtonMoveView(ctx: Context) : View(ctx) {
         fun update(stopcb: (Float) -> Unit) {
             scales[j] += 0.1f * dir
             if (Math.abs(scales[j] - prevScale) > 1) {
-                prevScale = scales[j] + dir
+                scales[j] = prevScale + dir
                 j += dir
                 if (j == scales.size || j == -1) {
                     j -= dir
@@ -77,17 +77,19 @@ class PowerButtonMoveView(ctx: Context) : View(ctx) {
 
     data class PowerButtonMove(var i: Int, val state: State = State()) {
         fun draw(canvas: Canvas, paint: Paint) {
+            paint.style = Paint.Style.STROKE
             paint.color = Color.WHITE
+            paint.strokeCap = Paint.Cap.ROUND
             val w: Float = canvas.width.toFloat()
             val h: Float = canvas.height.toFloat()
             val r = Math.min(w, h) / 18
-            paint.strokeWidth = r / 3
-            val deg: Float = 15f
+            paint.strokeWidth = (2 * r) / 9
+            val deg: Float = 22.5f
             canvas.save()
             canvas.translate(w / 2, h / 2)
-            canvas.rotate(90f * state.scales[2])
-            val y_updated = (h / 2) * state.scales[3]
-            canvas.drawLine(-y_updated, 0f, -y_updated + (r + r / 6) * state.scales[1], 0f, paint)
+            canvas.rotate(180f + 90f * state.scales[2])
+            val y_updated = (h / 2 + paint.strokeWidth) * state.scales[3]
+            canvas.drawLine(y_updated, 0f, y_updated + (r + r / 4) * state.scales[1], 0f, paint)
             canvas.drawArc(RectF(-r, -r, r, r), deg, (360f - 2 * deg) * state.scales[0], false, paint)
             canvas.restore()
         }
