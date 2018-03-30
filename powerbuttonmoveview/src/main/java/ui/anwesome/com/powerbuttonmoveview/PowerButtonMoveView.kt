@@ -98,4 +98,22 @@ class PowerButtonMoveView(ctx: Context) : View(ctx) {
             state.startUpdating(startcb)
         }
     }
+    data class Renderer(var view : PowerButtonMoveView) {
+        val animator : Animator = Animator(view)
+        val powerButtonMove : PowerButtonMove = PowerButtonMove(0)
+        fun render(canvas : Canvas, paint : Paint) {
+            canvas.drawColor(Color.parseColor("#212121"))
+            powerButtonMove.draw(canvas, paint)
+            animator.animate {
+                powerButtonMove.update {
+                    animator.stop()
+                }
+            }
+        }
+        fun handleTap() {
+            powerButtonMove.startUpdating {
+                animator.start()
+            }
+        }
+    }
 }
