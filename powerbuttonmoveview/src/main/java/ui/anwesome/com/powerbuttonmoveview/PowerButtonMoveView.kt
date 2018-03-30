@@ -122,7 +122,7 @@ class PowerButtonMoveView(ctx: Context) : View(ctx) {
         fun create(activity : Activity) : PowerButtonMoveView {
             val view = PowerButtonMoveView(activity)
             activity.setContentView(view)
-            return view 
+            return view
         }
     }
 }
